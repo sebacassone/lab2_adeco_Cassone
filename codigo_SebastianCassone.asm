@@ -3,6 +3,7 @@
 	random_msg1: .asciiz "Primer número aleatorio entre 0 y 100 generado: "
 	random_msg2: .asciiz "Segundo número aleatorio entre 0 y 100 generado: "
 	mensaje_bienvenida: .asciiz "Ingrese la cantidad de puntos aleatorios: "
+	mensaje_resultado: .asciiz "La aproximacion de PI es: "
 	distancia: .asciiz "La distancia es: "
 	salto_linea: .asciiz "\n"
 	radio_limite: .float 100.0
@@ -39,6 +40,10 @@
 
 
 	calcularPi:
+		# Imprime el mensaje de resultado
+		li $v0, 4
+		la $a0, mensaje_resultado
+		syscall
 		# Divide la cantidad de puntos en el circulo
 		# y lo divide por el total.
 		# Transforma el registro $s0 y $s1 en flotante
@@ -58,6 +63,11 @@
 		# Muestra el resultado $f16, en pantalla
 		li $v0, 2
 		add.s $f12, $f17, $f31
+		syscall
+		
+		# Salto de linea
+		li $v0, 4
+		la $a0, salto_linea
 		syscall
 		
 		jal exit
